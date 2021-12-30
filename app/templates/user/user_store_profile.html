@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-店铺资料页{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for('user.user_profile') }}" class="list-group-item">个人资料</a>
+                <a href="{{ url_for('user.user_address') }}" class="list-group-item">收货地址管理</a>
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('user.user_store_profile') }}" class="list-group-item active">店铺管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_commodities') }}" class="list-group-item">商品管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_user_orders') }}" class="list-group-item">用户订单管理</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img class="img-rounded" src="{{ url_for('static', filename='store_images/') + store.storeimage }}" width="222" height="222">
+                    </div>
+                    <div class="col-sm-7">
+                        <p>店主：{{ store.real_name }}</p>
+                        <p>店铺编号：{{ store.id }}</p>
+                        <p>店铺名称：{{ store.storename }}</p>
+                        <p>店铺地址：{{ store.storeaddress }}</p>
+                        <p><a href="{{ url_for('user.edit_store_profile') }}">点击此处编辑您的店铺资料</a></p>          
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

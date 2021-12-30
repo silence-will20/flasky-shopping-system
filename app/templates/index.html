@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}购物商城-主页{% endblock %}
+
+{% block page_content %}
+<div id="content" class="page-header container">
+    <div class="row carousel-holder">
+        <div class="col-md-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for i in range(recommending_commodities.count()) %}
+                    {% if i == 0 %}
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    {% else %}
+                    <li data-target="#carousel-example-generic" data-slide-to="{{ i }}"></li>
+                    {% endif %}
+                    {% endfor %}
+                </ol>
+                <div id="banner_img" class="carousel-inner" role="listbox">
+                    {% for com in recommending_commodities %}
+                    {% if com == recommending_commodities[0] %}
+                    <div class="item active">
+                        <a href="{{ url_for('main.commodity_detail', commodityid=com.id) }}"><img class="slide-image" src="{{ url_for('static', filename='recommending_commodity_images/') + com.commodityimage }}" alt=""/></a>
+                    </div>
+                    {% else %}
+                    <div class="item">
+                        <a href="{{ url_for('main.commodity_detail', commodityid=com.id) }}"><img class="slide-image" src="{{ url_for('static', filename='recommending_commodity_images/') + com.commodityimage }}" alt=""/></a>
+                    </div>
+                    {%endif%}
+                    {% endfor %}
+                </div>
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
+            <h3>商品分类</h3>
+            <div class="list-group">
+                <a href="{{ url_for('main.show_category_commodities', categoryid=1) }}" class="list-group-item">服装 &amp; 饰品</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=2) }}" class="list-group-item">母婴用品</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=3) }}" class="list-group-item">美容</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=4) }}" class="list-group-item">电子产品</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=5) }}" class="list-group-item">家具</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=6) }}" class="list-group-item">家居 &amp; 园艺</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=7) }}" class="list-group-item">箱包</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=8) }}" class="list-group-item">鞋</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=9) }}" class="list-group-item">体育 &amp; 娱乐</a>
+                <a href="{{ url_for('main.show_category_commodities', categoryid=10) }}" class="list-group-item">手表</a>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-9">
+            <div class="row">
+                {% for com in commodities %}
+                <div class="col-sm-4 col-md-6">
+                    <div class="thumbnail">
+                        <a href="{{ url_for('main.commodity_detail', commodityid=com.id) }}"><img src="{{ url_for('static', filename='commodity_images/') + com.commodityimage }}" alt="" width="260" height="180"></a>
+                        <div class="add-to-cart text-right">
+                            <a href="{{ url_for('user.add_commodity_to_basket', commodityid=com.id) }}" class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
+                        </div>
+                        <div class="caption">
+                            <h4 class="pull-right">￥{{ com.price }}</h4>
+                            <h4><a href="{{ url_for('main.commodity_detail', commodityid=com.id) }}">{{ com.commodityname }}</a></h4>
+                            <p>{{ com.about_commodity }}</p>
+                            <div class="ratings">
+                                <p class="text-right">销量：{{ com.sales_volume }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #banner_img{
+    width:1140px;
+    height:350px;
+    }
+</style>
+
+{% endblock %}

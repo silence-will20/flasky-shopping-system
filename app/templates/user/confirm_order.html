@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}购物商场-确认订单{% endblock %}
+
+{% block page_content %}
+<div class="page_content">
+    <h1>我的订单</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+    <h5 class="text-right">应付总额：{{ total_price }}</h5>
+</div>
+{% endblock %}

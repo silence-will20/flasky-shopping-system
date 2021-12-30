@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-管理商品信息{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>管理商品信息【管理员】</h1>
+            <div class="thumbnail">
+                <div class="row">
+                    {% for (com, category) in commodity_and_category %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-sm-4">
+                                <img class="img-rounded" src="{{ url_for('static', filename='commodity_images/') + com.commodityimage }}" width="222" height="222">
+                            </div>
+                            <div class="col-sm-7">
+                                <p>商品名称：{{ com.commodityname }}</p>
+                                <p>商品分类：{{ category }}</p>
+                                <p>商品价格：{{ com.price }}</p>
+                                <p>商品简介：{{ com.about_commodity }}</p>
+                                <p>库存：{{ com.inventory }}</p>
+                                <p>销量：{{ com.sales_volume }}</p>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{ url_for('admin.store_edit_commodity', userid=user.id, commodityid=com.id) }}">编辑</a>
+                            <a href="{{ url_for('admin.store_delete_commodity', userid=user.id, commodityid=com.id) }}" class="btn btn-danger">删除</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

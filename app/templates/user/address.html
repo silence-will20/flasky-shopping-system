@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-管理收货地址{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for('user.user_profile') }}" class="list-group-item">个人资料</a>
+                <a href="{{ url_for('user.user_address') }}" class="list-group-item active">收货地址管理</a>
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('user.user_store_profile') }}" class="list-group-item">店铺管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_commodities') }}" class="list-group-item">商品管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_user_orders') }}" class="list-group-item">用户订单管理</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <p><a href="{{ url_for('user.user_add_address') }}" class="btn btn-sm btn-default">新增收货地址</a></p>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <div class="row">
+                    {% for ads in address %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {{ ads.real_name }}
+                            <a class="close" href="{{ url_for('user.user_delete_address', addressid=ads.id) }}">&times;</a>
+                        </div>
+                        <div class="panel-body">
+                            <p>收货人：{{ ads.real_name }}</p>
+                            <p>详细地址：{{ ads.address }}</p>
+                            <p>手机：{{ ads.phone }}</p>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{ url_for('user.user_edit_address', addressid=ads.id) }}">编辑</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-店铺资料页{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-rounded" src="{{ url_for('static', filename='store_images/') + store.storeimage }}" width="222" height="222">
+                    </div>
+                    <div class="col-md-8">
+                        <p>店主：{{ store.real_name }}</p>
+                        <p>店铺名称：{{ store.storename }}</p>
+                        <p>店铺地址：{{ store.storeaddress }}</p>
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

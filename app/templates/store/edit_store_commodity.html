@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}购物商场-编辑商品信息{% endblock %}
+
+{% block page_content %}
+<div class="page_content">
+    <h1>编辑商品的资料</h1></br>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}

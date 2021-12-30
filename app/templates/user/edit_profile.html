@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}购物商场-编辑用户个人资料{% endblock %}
+
+{% block page_content %}
+<div class="page_content">
+    <h1>编辑{{ current_user.username }}的个人资料</h1></br>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+    {% if current_user.is_administrator() and user.is_store() %}
+    <p>
+        <a class="btn btn-default" href="{{ url_for('admin.edit_store_profile', userid=user.id) }}">编辑商家店铺资料</a>
+        <a class="btn btn-default" href="{{ url_for('admin.manage_store_commodities', userid=user.id) }}">管理商家商品信息</a>
+    </p>
+    
+    <button type="submit" class="btn btn-default">确认修改</button>
+    {% endif %}
+</div>
+{% endblock %}

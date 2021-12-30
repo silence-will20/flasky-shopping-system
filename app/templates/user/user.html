@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-用户首页{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        {% if current_user == user %}
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for('user.user_profile') }}" class="list-group-item active">个人资料</a>
+                <a href="{{ url_for('user.user_address') }}" class="list-group-item">收货地址管理</a>
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('user.user_store_profile') }}" class="list-group-item">店铺管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_commodities') }}" class="list-group-item">商品管理</a>
+                {% endif %}
+                {% if current_user.is_store() %}
+                <a href="{{ url_for('store.manage_user_orders') }}" class="list-group-item">用户订单管理</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img class="img-rounded" src="{{ url_for('static', filename='avatars/') + user.avatar }}" width="222" height="222">
+                    </div>
+                    <div class="col-sm-7">
+                        <p>用户编号：{{ user.id }}</p>
+                        <p>用户昵称：{{ user.username }}</p>
+                        {% if user.is_administrator() %}
+                            <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                        {% endif %}
+                        <p>
+                            注册时间：{{ moment(user.member_since).format('LLL') }}
+                        </p>
+                        {% if user == current_user %}
+                        <p><a href="{{ url_for('user.edit_profile') }}">点击此处编辑您的个人资料</a></p>
+                        {% endif %}
+                        {% if not current_user.is_store() and not current_user.is_administrator() %}
+                            <p><a class="btn btn-sm btn-default" href="{{ url_for('auth.register_store') }}">申请注册为商家</a></p>
+                        {% endif %}
+                        {% if current_user.is_administrator() and current_user == user %}
+                            <p><a class="btn btn-danger" href="{{ url_for('admin.get_userid', id=user.id) }}">点击此处编辑其他用户的个人资料 [管理员]</a></p>
+                        {% endif %}
+                        
+                    </div>  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

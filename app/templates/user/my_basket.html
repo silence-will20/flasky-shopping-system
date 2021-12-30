@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-我的购物车{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>我的购物车</h1>
+            <div class="thumbnail">
+                <div class="row">
+                    {% for i in range(count) %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            店铺名称：{{ stores[i] }}
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-4">
+                                <a href="{{ url_for('main.commodity_detail', commodityid=commodities[i].id) }}"><img class="img-rounded" src="{{ url_for('static', filename='commodity_images/') + commodities[i].commodityimage }}" width="222" height="222"></a>
+                            </div>
+                            <div class="col-sm-7">
+                                <a href="{{ url_for('main.commodity_detail', commodityid=commodities[i].id) }}">商品名称：{{ commodities[i].commodityname }}</a>
+                                <p>商品价格：￥{{ commodities[i].price * basket[i].number }}</p>
+                                <p>商品数量：{{ basket[i].number }}</p>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{ url_for('user.delete_commodity_from_basket', commodityid=commodities[i].id) }}" class="btn btn-danger">删除</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if count %}
+                <h4 class="text-right">总价：￥{{ total_price }} <a href="{{ url_for('user.confirm_order') }}" class="btn btn-success"><h4>结算</h4></a></h4>
+                <h4 class="text-center">到底了！</h4>
+                {% else %}
+                <h4 class="text-center">空空如也~~快去添加喜欢的商品到购物车吧！</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

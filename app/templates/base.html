@@ -1,0 +1,102 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}购物商城{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">购物商城</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">主页</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown">所有商品分类<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=1) }}">服装 &amp; 饰品</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=2) }}">母婴用品</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=3) }}">美容</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=4) }}">电子产品</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=5) }}">家具</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=6) }}">家居 &amp; 园艺</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=7) }}">箱包</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=8) }}">鞋</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=9) }}">体育 &amp; 娱乐</a></li>
+                        <li><a href="{{ url_for('main.show_category_commodities', categoryid=10) }}">手表</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ url_for('main.index') }}">所有商品分类</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('user.my_orders') }}">我的订单</a></li>
+            </ul>
+            
+            <form class="navbar-form navbar-left" role="search" action="{{ url_for('main.search_commodity_results') }}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search_input">
+                </div>
+                <button type="submit" class="btnbtn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('user.my_basket') }}"><img class="img-rounded" src="{{ url_for('static', filename='icons/basket.jpg')}}" width="25" height="25"></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img class="img-rounded" src="{{ url_for('static', filename='avatars/') + current_user.avatar }}" width="25" height="25">
+                        {{ current_user.username }}
+                        <b class="caret"></b>
+                    </a>    
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.my_user', username=current_user.username) }}">我的</a></li>
+                        <li><a href="{{ url_for('auth.reset_password') }}">修改密码</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">登出</a></li>
+                    </ul>
+                </li>
+                
+                
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.locale('zh-cn') }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}        
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+    <footer>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="text-center">Copyright &copy; <a href="{{ url_for('main.index') }}">WuH1n</a> 2021</p>
+            </div>
+        </div>
+    </footer>
+    
+</div>
+{% endblock %}

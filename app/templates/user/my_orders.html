@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-我的订单{% endblock %}
+
+{% block page_content %}
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>我的订单</h1>
+            <div class="thumbnail">
+                <div class="row">
+                    {% for i in range(count) %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            店铺名称：{{ stores[i] }}
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-1">
+                                <a href="{{ url_for('main.commodity_detail', commodityid=commodities[i].id) }}"><img class="img-reponsive" src="{{ url_for('static', filename='commodity_images/') + commodities[i].commodityimage }}"/></a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="{{ url_for('main.commodity_detail', commodityid=commodities[i].id) }}">{{ commodities[i].commodityname }}</a>
+                            </div>
+                            <div class="col-sm-1">数量：{{ orders[i].number }}</div>
+                            <div class="col-sm-2">价格：￥{{ orders[i].price }}</div>
+                            <div class="col-sm-4">订单时间：{{ moment(orders[i].time).format('LLL') }}</div>
+                            <div class="col-sm-4">收货地址：{{ orders[i].address }}</div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{ url_for('user.delete_order', orderid=orders[i].id) }}" class="btn btn-danger">取消订单</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <h4 class="text-center">到底了！</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

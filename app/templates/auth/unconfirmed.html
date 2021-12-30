@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}购物商场-未激活账户{% endblock %}
+
+{% block page_content %}
+<div class="page_content">
+    <h1>Hello, {{ username }}!</h1>
+    <h2>您尚未激活账户！</h2>
+    <p>我们已经向您的邮箱发送了一封验证邮件，请点击邮件内链接进行确认</p>
+    <p>没有收到邮件？<a href="{{ url_for('auth.resend_confirmation') }}">点击这里</a>重新发送</p>
+</div>
+{% endblock %}
